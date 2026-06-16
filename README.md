@@ -1,5 +1,7 @@
 # ForensicBench
 
+**Anonymous code release:** [https://anonymous.4open.science/r/Forensic_Bench-5301/](https://anonymous.4open.science/r/Forensic_Bench-5301/)
+
 Reference implementation for **ForensicBench** (EMNLP 2026 Industry Track): a benchmark for evaluating agentic LLMs on scheme-level journal-entry fraud detection.
 
 This repository contains the **reference agent**, **evaluation harness**, and **reproduction scripts** for the 12 open-weight models reported in the paper. It is an anonymized release of the research codebase (`researchpkg`).
