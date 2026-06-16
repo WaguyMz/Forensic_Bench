@@ -12,7 +12,6 @@ This repository contains the **reference agent**, **evaluation harness**, and **
 
 The figure summarizes the benchmark in three steps: **sector ledgers** with hidden fraud, the **agent investigation** (SQL + code, five fraud schemes), and **offline scoring** against ground-truth labels. The inset in *The data* shows the per-sector GL schema (eight linked SQL tables; `anomaly_labels` is evaluator-only).
 
-Editable vector source: `forensicbench_overview.svg`. For LaTeX: `forensicbench_overview.pdf`.
 
 ### Benchmark at a glance
 
@@ -332,15 +331,7 @@ Scheme prompts and evaluation entry points are listed in [Key files for contribu
 
 Paper experiments used **4× NVIDIA H200 (147 GB)** with **vLLM** (PagedAttention; Kwon et al., 2023). Tensor-parallel size per model is set in each `scripts/vllm/serve_*.sh` script and should be adjusted for your GPU topology.
 
-## Citation
 
-```bibtex
-@inproceedings{forensicbench2026,
-  title={ForensicBench: Evaluating Agentic {LLM}s on Journal-Entry Fraud Detection},
-  booktitle={EMNLP 2026 Industry Track},
-  year={2026}
-}
-```
 
 ## License
 
