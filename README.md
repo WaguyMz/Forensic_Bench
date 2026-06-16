@@ -79,6 +79,55 @@ ForensicBench/
 └── pyproject.toml
 ```
 
+## Key files for contributors
+
+Use this map when extending fraud schemes, swapping the agent, or changing evaluation logic.
+
+### Fraud schemes & ground truth
+
+| File | Role |
+|------|------|
+| `researchpkg/forensic_llm/prompts/fraud_catalogue.py` | Agent-visible catalogue of the five scheme types (injected into every run; no injection parameters). Entry point for prompt alignment and new leaderboard participants. |
+| `researchpkg/forensic_llm/prompts/minimal_scheme_cards.py` | Short scheme definitions (process anchor and economic meaning). |
+| `researchpkg/forensic_llm/models.py` | `SchemeType` enum, `SuspicionItem`, `ForensicReport` — output contract expected by the evaluator. |
+| `anomaly_labels` (CSV in labelled ledgers / labelled DB) | Ground truth: `document_id`, `anomaly_type`, `is_injected`, scheme metadata. Source of truth for all metrics. |
+| `scripts/datasets/populate_psql.sh` | Builds **labelled** vs **public** databases; strips fraud columns and drops `anomaly_labels` from the agent DB. |
+| `researchpkg/forensic_llm/experiments/summarize_dataset.py` | Utility: per-scheme fraud breakdown from `anomaly_labels.csv`. |
+
+Multi-stage fraud **injection** (posting templates, scheme orchestration) is **not** in this repository; shipped ledgers in `datasets/<sector>.tar.zst` are pre-injected. To regenerate sectors or add a scheme at the data layer, contact the authors (see Datasets below).
+
+### Evaluation harness
+
+| File | Role |
+|------|------|
+| `researchpkg/forensic_llm/evaluator.py` | Core: `evaluate()`, `evaluate_schemes()`, `evaluate_and_save()` — E-F1, Type-F1, recall/precision, coverage; maps `anomaly_type` to canonical scheme labels. |
+| `researchpkg/forensic_llm/investigation_report.py` | Assembles `investigation_report.json` and `report.md` after a run. |
+| `researchpkg/forensic_llm/run.py` | Reference agent CLI; `--evaluate` calls `evaluate_and_save` and writes `eval_*.json`. |
+| `researchpkg/forensic_llm/run_rule_based.py` | Rule-based oracle (appendix); uses the same evaluator. |
+| `scripts/leaderboard/generate_leaderboard_combined.py` | Aggregates **5 sectors × 5 seeds**; re-evaluates via `evaluator.evaluate()`. |
+| `scripts/leaderboard/generate_leaderboard.py` | Per-run leaderboard and documentation of the six metric axes. |
+
+Evaluation flow:
+
+```mermaid
+flowchart LR
+  agentRun[Agent_run_or_custom] --> report[ForensicReport_or_investigation_report.json]
+  report --> evaluator[evaluator.evaluate_and_save]
+  labels[anomaly_labels_labelled_DB] --> evaluator
+  evaluator --> evalJson[eval_*.json]
+  evalJson --> leaderboard[generate_leaderboard_combined]
+```
+
+### Reference agent (optional)
+
+To replace the agent without changing evaluation:
+
+| File | Role |
+|------|------|
+| `researchpkg/forensic_llm/agent.py` | Orientation, planning, and hypothesis workers. |
+| `researchpkg/forensic_llm/prompts/system_prompt.py` | Runtime prompt assembly. |
+| `researchpkg/forensic_llm/tools/` | SQL, code interpreter, `report_suspicion`, and other agent tools. |
+
 ## Requirements
 
 | Component | Purpose |
@@ -277,7 +326,7 @@ Most settings are controlled via environment variables (see `researchpkg/forensi
 | `FORENSIC_MODEL_CONTEXT_WINDOW` | `128000` | Context window cap (match vLLM `max_model_len`) |
 | `FORENSIC_LLM_MAX_TOKENS_PER_STEP` | `16384` | Max completion tokens per step |
 
-The fraud catalogue injected into every run is in `researchpkg/forensic_llm/prompts/fraud_catalogue.py`.
+Scheme prompts and evaluation entry points are listed in [Key files for contributors](#key-files-for-contributors).
 
 ## Hardware notes
 
