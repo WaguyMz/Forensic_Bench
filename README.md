@@ -119,6 +119,14 @@ flowchart LR
 
 ### Reference agent (optional)
 
+The reference harness runs four phases under one fixed token budget, and each hypothesis is investigated by a bounded ReAct worker.
+
+![Four phases of the reference harness](docs/harness_phases.svg)
+
+![Investigation worker: bounded ReAct loop](docs/react_loop.svg)
+
+![Benchmark architecture](docs/architecture.svg)
+
 To replace the agent without changing evaluation:
 
 | File | Role |

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="10 40 940 260" width="960" height="300" font-family="Inter, Helvetica, Arial, sans-serif">
+<defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#004a8f"/></marker></defs>
+<rect width="960" height="300" fill="#ffffff"/>
+<g stroke="#002c56" stroke-width="1.5">
+<rect x="24" y="64" width="160" height="120" fill="#eaf1f9"/>
+<rect x="232" y="64" width="190" height="120" fill="#002c56"/>
+<rect x="470" y="64" width="140" height="120" fill="#eaf1f9"/>
+<rect x="658" y="64" width="130" height="120" fill="#eaf1f9"/>
+<rect x="826" y="64" width="110" height="120" fill="#004a8f"/>
+</g>
+<g stroke="#004a8f" stroke-width="2" marker-end="url(#a)" fill="none">
+<line x1="186" y1="124" x2="228" y2="124"/><line x1="424" y1="124" x2="466" y2="124"/><line x1="612" y1="124" x2="654" y2="124"/><line x1="790" y1="124" x2="822" y2="124"/></g>
+<g fill="#002c56" text-anchor="middle">
+<text x="104" y="92" font-size="17" font-weight="700">Forensic Ledger</text>
+<text x="104" y="114" font-size="14">5 sectors</text><text x="104" y="132" font-size="14">~300K entries each</text><text x="104" y="150" font-size="14">read-only SQL</text><text x="104" y="168" font-size="14">no fraud labels</text></g>
+<g fill="#ffffff" text-anchor="middle">
+<text x="327" y="92" font-size="17" font-weight="700">Agent harness</text>
+<text x="327" y="114" font-size="14">1 Orient</text><text x="327" y="132" font-size="14">2 Plan (once)</text><text x="327" y="150" font-size="14">3 Investigate</text><text x="327" y="168" font-size="14">4 Report</text></g>
+<g fill="#002c56" text-anchor="middle">
+<text x="540" y="92" font-size="17" font-weight="700">Flags</text>
+<text x="540" y="118" font-size="14">document_id</text><text x="540" y="136" font-size="14">+ scheme type</text><text x="540" y="160" font-size="12" fill="#6e7884">5 replicates</text>
+<text x="723" y="92" font-size="17" font-weight="700">Scorer</text>
+<text x="723" y="118" font-size="14">compares</text><text x="723" y="136" font-size="14">to labels</text><text x="723" y="160" font-size="12" fill="#b3261e" font-weight="700">labels stay private</text></g>
+<g fill="#ffffff" text-anchor="middle">
+<text x="881" y="92" font-size="17" font-weight="700">Leaderboard</text>
+<text x="881" y="118" font-size="14">Entry-F1</text><text x="881" y="136" font-size="14">Type-F1</text><text x="881" y="154" font-size="14">Coverage</text><text x="881" y="172" font-size="14">Consistency</text></g>
+<g stroke="#004a8f" stroke-width="1.5" fill="none" stroke-dasharray="5 4">
+<path d="M104 186 V236 H881 V188" marker-end="url(#a)"/></g>
+<text x="492" y="256" font-size="14" fill="#004a8f" text-anchor="middle">Public ledgers on Hugging Face, automatic scoring: plug in any harness.</text>
+<text x="492" y="282" font-size="12" fill="#6e7884" text-anchor="middle">25 runs per model (5 sectors x 5 replicates), no composite score</text>
+</svg>
