@@ -145,7 +145,7 @@ Results of this reference agent (the 12 paper models) and of third-party harness
 2. Run your own harness, or the reference agent in `researchpkg/forensic_llm/`, on the five sectors.
 3. Upload a CSV of flags (`sector,document_id,scheme_type`, plus `replicate` for multi-run files) on the leaderboard page, with the name and code link of your harness.
 
-Labels stay private. Scoring uses the same metrics as `evaluator.evaluate()` (Entry-F1, Type-F1, Coverage, Consistency). The backend (Supabase scorer and submission API) is in [forensicbench-leaderboard](https://github.com/WaguyMz/forensicbench-leaderboard). The local `scripts/leaderboard/` tools below only aggregate your own runs; they do not submit to the public leaderboard.
+The agent-visible fraud catalogue and the prompts of the reference harness are in `researchpkg/forensic_llm/prompts/` and are also downloadable with the data (`catalogue/` and `prompts/` in the dataset). Labels stay private. Scoring uses the same metrics as `evaluator.evaluate()` (Entry-F1, Type-F1, Coverage, Consistency). The backend (Supabase scorer and submission API) is in [forensicbench-leaderboard](https://github.com/WaguyMz/forensicbench-leaderboard). The local `scripts/leaderboard/` tools below only aggregate your own runs; they do not submit to the public leaderboard.
 
 ## Requirements
 
