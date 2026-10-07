@@ -197,7 +197,7 @@ bundle; they document how the paper numbers were computed.
    Scoring is automatic and uses the same metrics as `evaluator.evaluate()`. The flags of the 12 paper models are in
    [forensicbench-leaderboard/testdata/reference](https://github.com/WaguyMz/forensicbench-leaderboard/tree/main/testdata/reference):
    submitting them reproduces the paper table.
-2. **With labels (local re-evaluation).** Contact the authors for access to the labelled bundle for research evaluation.
+2. **With labels (local re-evaluation).** Write to guywaffo@gmail.com to request the labelled bundle for research evaluation.
 
 ### 1. Start Postgres in Docker
 
