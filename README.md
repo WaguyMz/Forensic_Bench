@@ -29,7 +29,7 @@ The figure summarizes the benchmark in three steps: **sector ledgers** with hidd
 
 ### Forensic Ledger datasets (5 sectors)
 
-Each sector is a synthetic multi-company ledger (~3 years of postings). Archives ship as `datasets/<sector>.tar.zst` (~610 MB total compressed).
+Each sector is a synthetic multi-company ledger (~3 years of postings). The unlabelled ledgers are on [Hugging Face](https://huggingface.co/datasets/WaguyMZ/ForensicBench). The ground-truth labels are **not distributed in this repository**.
 
 | Sector | JE headers | JE lines | Fraud rows | Posting period |
 |--------|-----------:|---------:|-----------:|----------------|
@@ -95,7 +95,7 @@ Use this map when extending fraud schemes, swapping the agent, or changing evalu
 | `scripts/datasets/populate_psql.sh` | Builds **labelled** vs **public** databases; strips fraud columns and drops `anomaly_labels` from the agent DB. |
 | `researchpkg/forensic_llm/experiments/summarize_dataset.py` | Utility: per-scheme fraud breakdown from `anomaly_labels.csv`. |
 
-Multi-stage fraud **injection** (posting templates, scheme orchestration) is **not** in this repository; shipped ledgers in `datasets/<sector>.tar.zst` are pre-injected. To regenerate sectors or add a scheme at the data layer, contact the authors (see Datasets below).
+Multi-stage fraud **injection** (posting templates, scheme orchestration) is **not** in this repository; the released ledgers are pre-injected. To regenerate sectors or add a scheme at the data layer, contact the authors (see Datasets below).
 
 ### Evaluation harness
 
@@ -154,7 +154,7 @@ The agent-visible fraud catalogue and the prompts of the reference harness are i
 | **Python 3.10+** | Agent and evaluation harness |
 | **Docker + Docker Compose** | Dedicated PostgreSQL (no host DB install) |
 | **psql** | Load dataset SQL exports (`postgresql-client` on Ubuntu) |
-| **zstd + tar** | Extract `datasets/*.tar.zst` archives |
+| **zstd + tar** | Extract the labelled bundle, if you have access to it |
 | **vLLM** (separate) | Serve open-weight models; not bundled in this repo |
 | **HuggingFace access** | Model weights for checkpoints in `scripts/vllm/` |
 
@@ -183,17 +183,21 @@ source .venv/bin/activate
 
 ## Datasets
 
-ForensicBench ships the **five sector Forensic Ledger exports** used in the paper as compressed archives:
+The **unlabelled** ledgers of the five sectors are released on [Hugging Face](https://huggingface.co/datasets/WaguyMZ/ForensicBench)
+(`je_header`, `je_line`, `chart_of_accounts`, master data; no fraud column, no `anomaly_labels`). This repository contains no label and no ledger.
 
-```
-datasets/
-  energy.tar.zst
-  healthcare.tar.zst
-  luxurygoods.tar.zst
-  manufacturing.tar.zst
-  transport.tar.zst
-  SHA256SUMS
-```
+**The ground-truth labels are held out**, so that the public leaderboard stays meaningful. The label-dependent steps below
+(`evaluator.py`, `scripts/datasets/populate_psql*.sh`, the archives referenced by `datasets/SHA256SUMS`) assume the labelled
+bundle; they document how the paper numbers were computed.
+
+### Reproducing the paper numbers
+
+1. **Without labels (open to everyone).** Run your agent, or the reference agent, on the unlabelled ledgers and submit the flags
+   (`sector,replicate,document_id,scheme_type`) on the [public leaderboard](https://waguy02.github.io/PHD-Research-Website/forensicbench/leaderboard/).
+   Scoring is automatic and uses the same metrics as `evaluator.evaluate()`. The flags of the 12 paper models are in
+   [forensicbench-leaderboard/testdata/reference](https://github.com/WaguyMz/forensicbench-leaderboard/tree/main/testdata/reference):
+   submitting them reproduces the paper table.
+2. **With labels (local re-evaluation).** Contact the authors for access to the labelled bundle for research evaluation.
 
 ### 1. Start Postgres in Docker
 
