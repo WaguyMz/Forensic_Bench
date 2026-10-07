@@ -2,6 +2,8 @@
 
 **Anonymous code release:** [https://anonymous.4open.science/r/Forensic_Bench-5301/](https://anonymous.4open.science/r/Forensic_Bench-5301/)
 
+**Links:** [Public leaderboard](https://waguy02.github.io/PHD-Research-Website/forensicbench/leaderboard/) · [Unlabelled dataset (Hugging Face)](https://huggingface.co/datasets/WaguyMZ/ForensicBench) · [Leaderboard backend](https://github.com/WaguyMz/forensicbench-leaderboard)
+
 Reference implementation for **ForensicBench** (EMNLP 2026 Industry Track): a benchmark for evaluating agentic LLMs on scheme-level journal-entry fraud detection.
 
 This repository contains the **reference agent**, **evaluation harness**, and **reproduction scripts** for the 12 open-weight models reported in the paper. It is an anonymized release of the research codebase (`researchpkg`).
@@ -134,6 +136,16 @@ To replace the agent without changing evaluation:
 | `researchpkg/forensic_llm/agent.py` | Orientation, planning, and hypothesis workers. |
 | `researchpkg/forensic_llm/prompts/system_prompt.py` | Runtime prompt assembly. |
 | `researchpkg/forensic_llm/tools/` | SQL, code interpreter, `report_suspicion`, and other agent tools. |
+
+## Public leaderboard
+
+Results of this reference agent (the 12 paper models) and of third-party harnesses are ranked on the **[public leaderboard](https://waguy02.github.io/PHD-Research-Website/forensicbench/leaderboard/)**. It is scored automatically:
+
+1. Download the unlabelled ledgers from [Hugging Face](https://huggingface.co/datasets/WaguyMZ/ForensicBench) (no fraud labels).
+2. Run your own harness, or the reference agent in `researchpkg/forensic_llm/`, on the five sectors.
+3. Upload a CSV of flags (`sector,document_id,scheme_type`, plus `replicate` for multi-run files) on the leaderboard page, with the name and code link of your harness.
+
+Labels stay private. Scoring uses the same metrics as `evaluator.evaluate()` (Entry-F1, Type-F1, Coverage, Consistency). The backend (Supabase scorer and submission API) is in [forensicbench-leaderboard](https://github.com/WaguyMz/forensicbench-leaderboard). The local `scripts/leaderboard/` tools below only aggregate your own runs; they do not submit to the public leaderboard.
 
 ## Requirements
 
@@ -299,6 +311,8 @@ Repeat for all 12 models (one vLLM server at a time, or one per GPU group).
 ```
 
 ### 4. Generate the leaderboard
+
+This builds a local table from your runs. To appear on the public leaderboard, submit your flags as described in [Public leaderboard](#public-leaderboard).
 
 After all runs complete (5 replicates per sector per model for the paper's 5×5 protocol):
 
